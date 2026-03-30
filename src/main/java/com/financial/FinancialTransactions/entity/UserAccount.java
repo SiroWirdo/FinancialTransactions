@@ -1,5 +1,6 @@
 package com.financial.FinancialTransactions.entity;
 
+import com.financial.FinancialTransactions.bankaccount.service.BankAccountService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,8 @@ import java.util.List;
 @Entity
 public class UserAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_account_seq", allocationSize = 1)
     @Getter
     @Setter
     private Long id;
@@ -26,6 +28,10 @@ public class UserAccount {
     @Getter
     @Setter
     private String password;
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Getter
+    @Setter
+    private List<BankAccount> bankAccounts = new ArrayList<>();
 
     public UserAccount(){
         this.userName = "";
@@ -39,5 +45,14 @@ public class UserAccount {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+    }
+
+    public void addBankAccount(BankAccount account) {
+        bankAccounts.add(account);
+    }
+
+    public void removeBankAccount(BankAccount account) {
+        bankAccounts.remove(account);
+        account.setUserAccount(null);
     }
 }

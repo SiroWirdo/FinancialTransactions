@@ -2,6 +2,7 @@ package com.financial.FinancialTransactions.user.service;
 
 import com.financial.FinancialTransactions.entity.UserAccount;
 import com.financial.FinancialTransactions.exception.NotFoundException;
+import com.financial.FinancialTransactions.sequence.service.IbanGeneratorService;
 import com.financial.FinancialTransactions.user.UserAccountRepository;
 import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountMapper;
@@ -29,6 +30,8 @@ class UserAccountServiceTest {
     UserAccountRepository userAccountRepository;
     @MockitoBean
     UserAccountMapper userAccountMapper;
+    @MockitoBean
+    IbanGeneratorService ibanGeneratorService;
 
     @Test
     void getAllUserAccounts() {
@@ -52,8 +55,10 @@ class UserAccountServiceTest {
     void createUserAccount() {
         UserAccountDTO testUser = new UserAccountDTO("uname", "fname", "lname", "pass");
         UserAccount expectedUser = new UserAccount("uname", "fname", "lname", "pass");
+        String iban = "PL07123498760000000000000123";
 
         when(userAccountMapper.toUserAccount(testUser)).thenReturn(expectedUser);
+        when(ibanGeneratorService.generateIBAN()).thenReturn(iban);
 
         userAccountService.createUserAccount(testUser);
         verify(userAccountRepository).save(expectedUser);

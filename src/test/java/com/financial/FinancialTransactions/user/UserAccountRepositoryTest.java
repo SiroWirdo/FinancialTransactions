@@ -28,7 +28,6 @@ class UserAccountRepositoryTest {
         UserAccount userAccount = new UserAccount("UserName", "FirstName", "LastName", "password");
         userAccountRepository.save(userAccount);
 
-        UserAccount testUser = userAccountRepository.findByUserName(userAccount.getUserName());
-        assertNotNull(testUser);
+        assertTrue(userAccountRepository.findByUserName(userAccount.getUserName()).isPresent());
     }
 }
