@@ -26,8 +26,10 @@ public class UserAccountController {
         return userAccountService.getAllUserAccounts();}
 
     @PostMapping
-    public void createNewUser(@RequestBody UserAccountDTO usr){
-        userAccountService.createUserAccount(usr);
+    public ResponseEntity<UserAccountDTO> createNewUser(@RequestBody UserAccountDTO usr){
+        UserAccountDTO result = userAccountService.createUserAccount(usr);
+
+        return ResponseEntity.ok(result);
     }
 
     @PatchMapping("/{userId}")

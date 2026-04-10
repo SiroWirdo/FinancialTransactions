@@ -36,12 +36,13 @@ public class UserAccountService {
     }
 
     @Transactional
-    public void createUserAccount(UserAccountDTO userAccountDTO) {
+    public UserAccountDTO createUserAccount(UserAccountDTO userAccountDTO) {
         String iban = ibanGeneratorService.generateIBAN();
         UserAccount userAccount = userAccountMapper.toUserAccount(userAccountDTO);
         BankAccount bankAccount = new BankAccount(userAccount, iban);
         userAccount.addBankAccount(bankAccount);
-        userAccountRepository.save(userAccount);
+        UserAccount result = userAccountRepository.save(userAccount);
+        return userAccountMapper.toDTO(result);
     }
 
     public UserAccountDTO updateUserAccount(Long userId, UserAccountUpdateDTO dto) {
@@ -52,8 +53,8 @@ public class UserAccountService {
         if (dto.getLastName() != null) {userAccount.setLastName(dto.getLastName());}
         if (dto.getPassword() != null) {userAccount.setPassword(dto.getPassword());}
 
-        userAccountRepository.save(userAccount);
+        UserAccount result = userAccountRepository.save(userAccount);
 
-        return userAccountMapper.toDTO(userAccount);
+        return userAccountMapper.toDTO(result);
     }
 }

@@ -26,4 +26,9 @@ public class BankAccountService {
         bankAccountRepository.save(from);
         bankAccountRepository.save(to);
     }
+
+    public void deposit(BankAccount bankAccount, BigDecimal amount) {
+        bankAccount.deposit(amount);
+        bankAccountRepository.save(bankAccount);
+    }
 }
