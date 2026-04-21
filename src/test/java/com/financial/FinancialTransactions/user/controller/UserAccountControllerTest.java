@@ -1,6 +1,6 @@
 package com.financial.FinancialTransactions.user.controller;
 
-import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import org.junit.jupiter.api.Test;
@@ -29,8 +29,12 @@ class UserAccountControllerTest {
 
     @Test
     void getUserList() {
-        UserAccountDTO userAccount = new UserAccountDTO("test", "test", "test", "test");
-        List<UserAccountDTO> userAccountList = new ArrayList<>();
+        UserAccountGetDTO userAccount = new UserAccountGetDTO();
+        userAccount.setUserName("test");
+        userAccount.setFirstName("test");
+        userAccount.setLastName("test");
+        userAccount.setPassword("test");
+        List<UserAccountGetDTO> userAccountList = new ArrayList<>();
         userAccountList.add(userAccount);
 
         when(userAccountService.getAllUserAccounts()).thenReturn(userAccountList);
@@ -44,7 +48,11 @@ class UserAccountControllerTest {
 
     @Test
     void createNewUser() {
-        UserAccountDTO userAccount = new UserAccountDTO("test", "test", "test", "test");
+        UserAccountGetDTO userAccount = new UserAccountGetDTO();
+        userAccount.setUserName("test");
+        userAccount.setFirstName("test");
+        userAccount.setLastName("test");
+        userAccount.setPassword("test");
 
         restTestClient.post()
                 .uri("/api/users")

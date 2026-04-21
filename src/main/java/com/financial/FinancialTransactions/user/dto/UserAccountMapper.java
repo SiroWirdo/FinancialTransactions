@@ -5,23 +5,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserAccountMapper {
-    public UserAccountDTO toDTO(UserAccount userAccount){
-        String userName = userAccount.getUserName();
-        String firstName = userAccount.getFirstName();
-        String lastName = userAccount.getLastName();
-        String password = userAccount.getPassword();
+    public UserAccountGetDTO toDTO(UserAccount userAccount){
+        UserAccountGetDTO userAccountGetDTO = new UserAccountGetDTO();
+        userAccountGetDTO.setUserName(userAccount.getUserName());
+        userAccountGetDTO.setFirstName(userAccount.getFirstName());
+        userAccountGetDTO.setLastName(userAccount.getLastName());
+        userAccountGetDTO.setPassword(userAccount.getPassword());
 
-        return new UserAccountDTO(userName,
-                firstName,
-                lastName,
-                password);
+        return userAccountGetDTO;
     }
 
-    public UserAccount toUserAccount(UserAccountDTO userAccountDTO){
-        String userName = userAccountDTO.getUserName();
-        String firstName = userAccountDTO.getFirstName();
-        String lastName = userAccountDTO.getLastName();
-        String password = userAccountDTO.getPassword();
+    public UserAccount toUserAccount(UserAccountGetDTO userAccountGetDTO){
+        String userName = userAccountGetDTO.getUserName();
+        String firstName = userAccountGetDTO.getFirstName();
+        String lastName = userAccountGetDTO.getLastName();
+        String password = userAccountGetDTO.getPassword();
 
         return new UserAccount(userName, firstName, lastName, password);
     }

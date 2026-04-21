@@ -28,7 +28,7 @@ public class UserAccount {
     @Getter
     @Setter
     private String password;
-    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, orphanRemoval = true,  fetch = FetchType.LAZY)
     @Getter
     @Setter
     private List<BankAccount> bankAccounts = new ArrayList<>();

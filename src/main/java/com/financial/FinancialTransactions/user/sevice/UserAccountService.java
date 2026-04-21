@@ -5,7 +5,7 @@ import com.financial.FinancialTransactions.entity.UserAccount;
 import com.financial.FinancialTransactions.exception.NotFoundException;
 import com.financial.FinancialTransactions.sequence.service.IbanGeneratorService;
 import com.financial.FinancialTransactions.user.UserAccountRepository;
-import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountMapper;
 import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class UserAccountService {
         this.ibanGeneratorService = ibanGeneratorService;
     }
 
-    public List<UserAccountDTO> getAllUserAccounts() {
+    public List<UserAccountGetDTO> getAllUserAccounts() {
         return userAccountRepository.findAll()
                 .stream()
                 .map(userAccountMapper::toDTO)
@@ -36,16 +36,16 @@ public class UserAccountService {
     }
 
     @Transactional
-    public UserAccountDTO createUserAccount(UserAccountDTO userAccountDTO) {
+    public UserAccountGetDTO createUserAccount(UserAccountGetDTO userAccountGetDTO) {
         String iban = ibanGeneratorService.generateIBAN();
-        UserAccount userAccount = userAccountMapper.toUserAccount(userAccountDTO);
+        UserAccount userAccount = userAccountMapper.toUserAccount(userAccountGetDTO);
         BankAccount bankAccount = new BankAccount(userAccount, iban);
         userAccount.addBankAccount(bankAccount);
         UserAccount result = userAccountRepository.save(userAccount);
         return userAccountMapper.toDTO(result);
     }
 
-    public UserAccountDTO updateUserAccount(Long userId, UserAccountUpdateDTO dto) {
+    public UserAccountGetDTO updateUserAccount(Long userId, UserAccountUpdateDTO dto) {
         UserAccount userAccount = userAccountRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("UserAccount", userId));
 

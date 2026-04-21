@@ -15,8 +15,13 @@ import java.util.stream.Stream;
 
 @Service
 public class TransactionHistoryService {
-    TransactionHistoryRepository transactionHistoryRepository;
-    TransactionHistoryMapper transactionHistoryMapper;
+    private final TransactionHistoryRepository transactionHistoryRepository;
+    private final TransactionHistoryMapper transactionHistoryMapper;
+
+    public TransactionHistoryService(TransactionHistoryRepository transactionHistoryRepository, TransactionHistoryMapper transactionHistoryMapper) {
+        this.transactionHistoryRepository = transactionHistoryRepository;
+        this.transactionHistoryMapper = transactionHistoryMapper;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveFailed(TransactionHistory transactionHistory) {
@@ -25,19 +30,13 @@ public class TransactionHistoryService {
     }
 
     public List<TransactionHistoryGetDTO> getAccountTransactionsHistory(Long bankAccountId) {
-        List<TransactionHistory> transactionFrom = transactionHistoryRepository.findTransactionHistoryByFromAccountId(bankAccountId)
-                .orElse(new ArrayList<>());
-        List<TransactionHistory> transactionTo = transactionHistoryRepository.findTransactionHistoryByToAccountId(bankAccountId)
-                .orElse(new ArrayList<>());
+        List<TransactionHistory> transactionFrom = transactionHistoryRepository.findTransactionHistoryByFromAccountId(bankAccountId);
+        List<TransactionHistory> transactionTo = transactionHistoryRepository.findTransactionHistoryByToAccountId(bankAccountId);
 
         ArrayList<TransactionHistoryGetDTO> result = new ArrayList<>();
 
-        transactionFrom.forEach(transaction -> {
-            result.add(transactionHistoryMapper.toTransactionHistoryDTO(transaction));
-        });
-        transactionTo.forEach(transaction -> {
-            result.add(transactionHistoryMapper.toTransactionHistoryDTO(transaction));
-        });
+        transactionFrom.forEach(transaction -> result.add(transactionHistoryMapper.toTransactionHistoryDTO(transaction)));
+        transactionTo.forEach(transaction -> result.add(transactionHistoryMapper.toTransactionHistoryDTO(transaction)));
 
         return result;
     }

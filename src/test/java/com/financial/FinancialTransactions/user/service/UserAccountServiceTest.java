@@ -4,11 +4,15 @@ import com.financial.FinancialTransactions.entity.UserAccount;
 import com.financial.FinancialTransactions.exception.NotFoundException;
 import com.financial.FinancialTransactions.sequence.service.IbanGeneratorService;
 import com.financial.FinancialTransactions.user.UserAccountRepository;
-import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountMapper;
 import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -20,40 +24,48 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class UserAccountServiceTest {
-
-    @Autowired
-    UserAccountService userAccountService;
-
-    @MockitoBean
+    @Mock
     UserAccountRepository userAccountRepository;
-    @MockitoBean
+    @Mock
     UserAccountMapper userAccountMapper;
-    @MockitoBean
+    @Mock
     IbanGeneratorService ibanGeneratorService;
+    @InjectMocks
+    UserAccountService userAccountService;
 
     @Test
     void getAllUserAccounts() {
         UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass");
-        UserAccountDTO userAccountDTO = new UserAccountDTO("uname", "fname", "lname", "pass");
+        UserAccountGetDTO userAccountGetDTO = new UserAccountGetDTO();
+        userAccountGetDTO.setUserName("uname");
+        userAccountGetDTO.setFirstName("fname");
+        userAccountGetDTO.setLastName("lname");
+        userAccountGetDTO.setPassword("pass");
+
         List<UserAccount> userAccountList = new ArrayList<>();
         userAccountList.add(userAccount);
 
         when(userAccountRepository.findAll()).thenReturn(userAccountList);
-        when(userAccountMapper.toDTO(userAccount)).thenReturn(userAccountDTO);
+        when(userAccountMapper.toDTO(userAccount)).thenReturn(userAccountGetDTO);
 
-        List<UserAccountDTO> testUserList = userAccountService.getAllUserAccounts();
+        List<UserAccountGetDTO> testUserList = userAccountService.getAllUserAccounts();
         assertNotNull(testUserList);
         assertEquals(userAccountList.size(), testUserList.size());
 
-        UserAccountDTO testUser = testUserList.get(0);
-        assertEquals(testUser, userAccountDTO);
+        UserAccountGetDTO testUser = testUserList.getFirst();
+        assertEquals(testUser, userAccountGetDTO);
     }
 
     @Test
     void createUserAccount() {
-        UserAccountDTO testUser = new UserAccountDTO("uname", "fname", "lname", "pass");
+        UserAccountGetDTO testUser = new UserAccountGetDTO();
+        testUser.setUserName("uname");
+        testUser.setFirstName("fname");
+        testUser.setLastName("lname");
+        testUser.setPassword("pass");
+
         UserAccount expectedUser = new UserAccount("uname", "fname", "lname", "pass");
         String iban = "PL07123498760000000000000123";
 
@@ -73,12 +85,17 @@ class UserAccountServiceTest {
         updateDTO.setLastName("updatedLastName");
         updateDTO.setPassword("updatedPassword");
 
-        UserAccountDTO mappedDto = new UserAccountDTO("uname", "fname", "lname", "pass");
+        UserAccountGetDTO mappedDto = new UserAccountGetDTO();
+        mappedDto.setUserName("uname");
+        mappedDto.setFirstName("fname");
+        mappedDto.setLastName("lname");
+        mappedDto.setPassword("pass");
 
         when(userAccountRepository.findById(userId)).thenReturn(Optional.of(userAccount));
-        when(userAccountMapper.toDTO(userAccount)).thenReturn(mappedDto);
+        when(userAccountMapper.toDTO(any(UserAccount.class))).thenReturn(mappedDto);
+        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(userAccount);
 
-        UserAccountDTO result = userAccountService.updateUserAccount(userId, updateDTO);
+        UserAccountGetDTO result = userAccountService.updateUserAccount(userId, updateDTO);
         assertEquals(result, mappedDto);
         assertEquals("updatedFirstName", userAccount.getFirstName());
         assertEquals("updatedLastName", userAccount.getLastName());
@@ -95,12 +112,17 @@ class UserAccountServiceTest {
         UserAccountUpdateDTO updateDTO = new UserAccountUpdateDTO();
         updateDTO.setFirstName("updatedFirstName");
 
-        UserAccountDTO mappedDto = new UserAccountDTO("uname", "fname", "lname", "pass");
+        UserAccountGetDTO mappedDto = new UserAccountGetDTO();
+        mappedDto.setUserName("uname");
+        mappedDto.setFirstName("fname");
+        mappedDto.setLastName("lname");
+        mappedDto.setPassword("pass");
 
         when(userAccountRepository.findById(userId)).thenReturn(Optional.of(userAccount));
-        when(userAccountMapper.toDTO(userAccount)).thenReturn(mappedDto);
+        when(userAccountMapper.toDTO(any(UserAccount.class))).thenReturn(mappedDto);
+        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(userAccount);
 
-        UserAccountDTO result = userAccountService.updateUserAccount(userId, updateDTO);
+        UserAccountGetDTO result = userAccountService.updateUserAccount(userId, updateDTO);
         assertEquals(result, mappedDto);
         assertEquals("updatedFirstName", userAccount.getFirstName());
         assertEquals("lname", userAccount.getLastName());

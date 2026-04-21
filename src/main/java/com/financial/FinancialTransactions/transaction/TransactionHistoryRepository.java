@@ -12,10 +12,10 @@ import java.util.Optional;
 @Repository
 public interface TransactionHistoryRepository extends JpaRepository<TransactionHistory, Long> {
 
-    @Query("SELECT t FROM TransactionHistory t WHERE t.fromBankAccount = :id")
-    Optional<List<TransactionHistory>> findTransactionHistoryByFromAccountId(@Param("id") Long fromAccountId);
+    @Query("SELECT t FROM TransactionHistory t WHERE t.fromBankAccount.id = :id")
+    List<TransactionHistory> findTransactionHistoryByFromAccountId(@Param("id") Long fromAccountId);
 
-    @Query("SELECT t FROM TransactionHistory t WHERE t.toBankAccount = :id")
-    Optional<List<TransactionHistory>> findTransactionHistoryByToAccountId(@Param("id") Long toAccountId);
+    @Query("SELECT t FROM TransactionHistory t WHERE t.toBankAccount.id = :id")
+    List<TransactionHistory> findTransactionHistoryByToAccountId(@Param("id") Long toAccountId);
 
 }

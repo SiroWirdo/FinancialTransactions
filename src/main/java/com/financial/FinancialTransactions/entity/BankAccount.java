@@ -1,5 +1,6 @@
 package com.financial.FinancialTransactions.entity;
 
+import com.financial.FinancialTransactions.exception.IncorrectAmount;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,11 +30,11 @@ public class BankAccount {
     @Setter
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal balance = BigDecimal.ZERO;
-    @OneToMany(mappedBy = "fromBankAccount")
+    @OneToMany(mappedBy = "fromBankAccount", fetch = FetchType.LAZY)
     @Getter
     @Setter
     private List<TransactionHistory> outgoingTransactions;
-    @OneToMany(mappedBy = "toBankAccount")
+    @OneToMany(mappedBy = "toBankAccount", fetch = FetchType.LAZY)
     @Getter
     @Setter
     private List<TransactionHistory> incomingTransactions;
@@ -46,10 +47,17 @@ public class BankAccount {
     }
 
     public void deposit(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IncorrectAmount();
+        }
         this.balance = this.balance.add(amount);
     }
 
     public void withdraw(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IncorrectAmount();
+        }
+
         this.balance = this.balance.subtract(amount);
     }
 }

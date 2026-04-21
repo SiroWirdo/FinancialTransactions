@@ -1,12 +1,10 @@
 package com.financial.FinancialTransactions.user.controller;
 
-import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,25 +14,24 @@ import java.util.List;
 public class UserAccountController {
     private final UserAccountService userAccountService;
 
-    @Autowired
     public UserAccountController(UserAccountService userAccountService){
         this.userAccountService = userAccountService;
     }
 
     @GetMapping
-    public List<UserAccountDTO> getUserList(){
+    public List<UserAccountGetDTO> getUserList(){
         return userAccountService.getAllUserAccounts();}
 
     @PostMapping
-    public ResponseEntity<UserAccountDTO> createNewUser(@RequestBody UserAccountDTO usr){
-        UserAccountDTO result = userAccountService.createUserAccount(usr);
+    public ResponseEntity<UserAccountGetDTO> createNewUser(@RequestBody UserAccountGetDTO usr){
+        UserAccountGetDTO result = userAccountService.createUserAccount(usr);
 
         return ResponseEntity.ok(result);
     }
 
     @PatchMapping("/{userId}")
-    public ResponseEntity<UserAccountDTO> partiallyUpdateEmployee(@RequestBody UserAccountUpdateDTO updatedDTO, @PathVariable Long userId){
-        UserAccountDTO updated = userAccountService.updateUserAccount(userId, updatedDTO);
+    public ResponseEntity<UserAccountGetDTO> partiallyUpdateEmployee(@RequestBody UserAccountUpdateDTO updatedDTO, @PathVariable Long userId){
+        UserAccountGetDTO updated = userAccountService.updateUserAccount(userId, updatedDTO);
         return ResponseEntity.ok(updated);
     }
 }

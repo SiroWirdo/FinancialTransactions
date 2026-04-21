@@ -80,6 +80,7 @@ public class TransactionService {
         transactionHistoryRepository.save(transactionHistory);
     }
 
+    @Transactional
     public void deposit(Long bankAccountId, BigDecimal amount) {
         BankAccount bankAccount = bankAccountRepository.findByIdForUpdate(bankAccountId)
                 .orElseThrow(() -> new NotFoundException("BankAccount", bankAccountId));
