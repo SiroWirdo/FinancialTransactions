@@ -3,6 +3,7 @@ package com.financial.FinancialTransactions.bankaccount.service;
 import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountGetDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountMapper;
+import com.financial.FinancialTransactions.bankaccount.dto.BankAccountWithTransactionsDTO;
 import com.financial.FinancialTransactions.entity.BankAccount;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +17,10 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -78,10 +81,30 @@ class BankAccountServiceTest {
         BankAccountGetDTO dto2 = new BankAccountGetDTO();
 
         when(bankAccountRepository.findAll()).thenReturn(bankAccounts);
-        when(bankAccountMapper.toBankAccountGetDTO(bankAccount)).thenReturn(bankAccountMapper.toBankAccountGetDTO(bankAccount2));
+        when(bankAccountMapper.toBankAccountGetDTO(bankAccount)).thenReturn(dto1);
+        when(bankAccountMapper.toBankAccountGetDTO(bankAccount2)).thenReturn(dto2);
+
+        List<BankAccountGetDTO> result = bankAccountService.getAllBankAccounts();
+        assertNotNull(result);
+        assertEquals(bankAccounts.size(), result.size());
+        assertEquals(dto1, result.get(0));
+        assertEquals(dto2, result.get(1));
+
     }
 
     @Test
     void getBankAccountWithTransactions() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setId(1L);
+
+        BankAccountWithTransactionsDTO  dto1 = new BankAccountWithTransactionsDTO();
+
+        when(bankAccountRepository.findById(1L)).thenReturn(Optional.of(bankAccount));
+        when(bankAccountMapper.toBankAccountWithTransactionsDTO(bankAccount)).thenReturn(dto1);
+
+        BankAccountWithTransactionsDTO result = bankAccountService.getBankAccountWithTransactions(1L);
+
+        assertNotNull(result);
+        assertEquals(dto1, result);
     }
 }

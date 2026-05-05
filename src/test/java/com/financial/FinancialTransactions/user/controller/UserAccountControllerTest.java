@@ -42,8 +42,12 @@ class UserAccountControllerTest {
         restTestClient.get()
                 .uri("/api/users")
                 .exchange()
-                .expectBody(String.class)
-                .isEqualTo("[{\"userName\":\"test\",\"firstName\":\"test\",\"lastName\":\"test\",\"password\":\"test\"}]");
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(1)
+                .jsonPath("$[0].userName").isEqualTo("test")
+                .jsonPath("$[0].firstName").isEqualTo("test")
+                .jsonPath("$[0].lastName").isEqualTo("test")
+                .jsonPath("$[0].password").isEqualTo("test");
     }
 
     @Test
