@@ -24,20 +24,24 @@ public class BankAccount {
     private UserAccount userAccount;
     @Getter
     @Setter
-    @Column(name = "bank_account_number", nullable = false, unique = true)
+    @Column (name = "bank_account_number", nullable = false, unique = true)
     private String bankAccountNumber;
     @Getter
     @Setter
-    @Column(nullable = false, precision = 19, scale = 2)
+    @Column (nullable = false, precision = 19, scale = 2)
     private BigDecimal balance = BigDecimal.ZERO;
-    @OneToMany(mappedBy = "fromBankAccount", fetch = FetchType.LAZY)
+    @OneToMany (mappedBy = "fromBankAccount", fetch = FetchType.LAZY)
     @Getter
     @Setter
     private List<TransactionHistory> outgoingTransactions;
-    @OneToMany(mappedBy = "toBankAccount", fetch = FetchType.LAZY)
+    @OneToMany (mappedBy = "toBankAccount", fetch = FetchType.LAZY)
     @Getter
     @Setter
     private List<TransactionHistory> incomingTransactions;
+    @OneToMany (mappedBy = "sourceBankAccount", fetch = FetchType.LAZY)
+    @Getter
+    @Setter
+    private List<Deposit> deposits;
 
     public BankAccount() {}
 

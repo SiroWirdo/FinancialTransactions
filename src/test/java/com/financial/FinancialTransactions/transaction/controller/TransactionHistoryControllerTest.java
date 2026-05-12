@@ -1,7 +1,5 @@
 package com.financial.FinancialTransactions.transaction.controller;
 
-import com.financial.FinancialTransactions.bankaccount.controller.BankAccountController;
-import com.financial.FinancialTransactions.entity.TransactionHistory;
 import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
 import com.financial.FinancialTransactions.transaction.service.TransactionHistoryService;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(TransactionHistoryController.class)
@@ -32,8 +29,8 @@ class TransactionHistoryControllerTest {
 
     @Test
     void getTransactionsHistory() {
-        var fromBankAccountId = 1l;
-        var toBankAccountId = 2l;
+        var fromBankAccountId = 1L;
+        var toBankAccountId = 2L;
         var localDateTime = LocalDateTime.now();
         var transactionHistoryGetDTO = new TransactionHistoryGetDTO();
         transactionHistoryGetDTO.setFromBankAccountId(fromBankAccountId);
