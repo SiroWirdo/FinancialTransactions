@@ -1,6 +1,5 @@
 package com.financial.FinancialTransactions.transaction;
 
-import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
 import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.entity.TransactionHistory;
 import com.financial.FinancialTransactions.entity.UserAccount;

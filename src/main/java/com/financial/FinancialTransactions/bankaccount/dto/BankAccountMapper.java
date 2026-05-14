@@ -2,15 +2,12 @@ package com.financial.FinancialTransactions.bankaccount.dto;
 
 import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 public class BankAccountMapper {
 
-    private TransactionHistoryMapper transactionHistoryMapper;
+    private final TransactionHistoryMapper transactionHistoryMapper;
 
     public BankAccountMapper(TransactionHistoryMapper transactionHistoryMapper) {
         this.transactionHistoryMapper = transactionHistoryMapper;

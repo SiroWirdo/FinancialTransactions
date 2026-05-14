@@ -2,11 +2,12 @@ package com.financial.FinancialTransactions.bankaccount.service;
 
 import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
 import com.financial.FinancialTransactions.bankaccount.DepositRepository;
-import com.financial.FinancialTransactions.bankaccount.dto.BankAccountWithTransactionsDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositGetDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositMapper;
 import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.entity.Deposit;
+import com.financial.FinancialTransactions.exception.IncorrectAmount;
+import com.financial.FinancialTransactions.exception.InsufficientFundsException;
 import com.financial.FinancialTransactions.general.enumaration.DepositStatus;
 import com.financial.FinancialTransactions.general.enumaration.DepositType;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +68,34 @@ class TimeDepositServiceTest {
 
         assertEquals(BigDecimal.valueOf(4000), bankAccount.getBalance());
 
+    }
+
+    @Test
+    void openDepositIncorrectAmountException() {
+        Long bankAccountId = 1L;
+        BigDecimal amount = BigDecimal.ZERO;
+        BigDecimal rate = new BigDecimal("0.5");
+        int lengthInMonths = 6;
+
+        assertThrows(IncorrectAmount.class,
+                () -> timeDepositService.openTimeDeposit(bankAccountId, amount, rate, lengthInMonths)
+        );
+    }
+
+    @Test
+    void openDepositInsufficientFundsException() {
+        Long bankAccountId = 1L;
+        BigDecimal amount = BigDecimal.valueOf(1000);
+        BigDecimal rate = new BigDecimal("0.5");
+        int lengthInMonths = 6;
+
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setBalance(BigDecimal.valueOf(500));
+
+        when(bankAccountRepository.findById(bankAccountId)).thenReturn(Optional.of(bankAccount));
+
+        assertThrows(InsufficientFundsException.class,
+                () ->  timeDepositService.openTimeDeposit(bankAccountId, amount, rate, lengthInMonths));
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.financial.FinancialTransactions.entity;
 
-import com.financial.FinancialTransactions.bankaccount.service.BankAccountService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,11 +1,8 @@
 package com.financial.FinancialTransactions.bankaccount.controller;
 
-import com.financial.FinancialTransactions.bankaccount.dto.BankAccountGetDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositGetDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositOpenNewDTO;
 import com.financial.FinancialTransactions.bankaccount.service.TimeDepositService;
-import com.financial.FinancialTransactions.entity.BankAccount;
-import com.financial.FinancialTransactions.entity.Deposit;
 import com.financial.FinancialTransactions.general.enumaration.DepositStatus;
 import com.financial.FinancialTransactions.general.enumaration.DepositType;
 import org.junit.jupiter.api.Test;
@@ -18,11 +15,9 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(TimeDepositController.class)

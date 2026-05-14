@@ -3,18 +3,20 @@ package com.financial.FinancialTransactions.transaction.service;
 import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
 import com.financial.FinancialTransactions.bankaccount.service.BankAccountService;
 import com.financial.FinancialTransactions.entity.BankAccount;
+import com.financial.FinancialTransactions.exception.IncorrectAmount;
+import com.financial.FinancialTransactions.exception.InsufficientFundsException;
+import com.financial.FinancialTransactions.exception.SameAccountTransactionException;
 import com.financial.FinancialTransactions.transaction.TransactionHistoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,6 +30,8 @@ class TransactionServiceTest {
     BankAccountService bankAccountService;
     @Mock
     BankAccountRepository bankAccountRepository;
+    @Mock
+    TransactionHistoryService transactionHistoryService;
     @InjectMocks
     TransactionService transactionService;
 
@@ -52,6 +56,42 @@ class TransactionServiceTest {
         verify(bankAccountService).transaction(fromBankAccount, toBankAccount, amount);
         verify(transactionHistoryRepository).save(any());
 
+    }
+
+    @Test
+    void transferSameAccountTransactionException() {
+        var bankAccountId = 1L;
+
+        assertThrows(SameAccountTransactionException.class,
+                () -> transactionService.transfer(bankAccountId, bankAccountId, BigDecimal.valueOf(200), "test"));
+    }
+
+    @Test
+    void transferIncorrectAmountException() {
+        var fromBankAccountId = 1L;
+        var toBankAccountId = 2L;
+
+        assertThrows(IncorrectAmount.class,
+                () -> transactionService.transfer(fromBankAccountId, toBankAccountId, BigDecimal.ZERO, "test"));
+    }
+
+    @Test
+    void transferInsufficientFundsException() {
+        var fromBankAccountId = 1L;
+        var toBankAccountId = 2L;
+
+        BankAccount fromBankAccount = new BankAccount();
+        fromBankAccount.setId(fromBankAccountId);
+        fromBankAccount.setBalance(new BigDecimal("100"));
+
+        BankAccount toBankAccount = new BankAccount();
+        toBankAccount.setId(toBankAccountId);
+
+        when(bankAccountRepository.findByIdForUpdate(fromBankAccountId)).thenReturn(Optional.of(fromBankAccount));
+        when(bankAccountRepository.findByIdForUpdate(toBankAccountId)).thenReturn(Optional.of(toBankAccount));
+
+        assertThrows(InsufficientFundsException.class,
+                () -> transactionService.transfer(fromBankAccountId, toBankAccountId, BigDecimal.valueOf(500), "test"));
     }
 
     @Test

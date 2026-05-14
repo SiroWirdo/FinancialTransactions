@@ -23,10 +23,6 @@ public class BankAccountService {
         this.bankAccountMapper = bankAccountMapper;
     }
 
-    /*public void createBankAccount(BankAccount bankAccount) {
-        bankAccountRepository.save(bankAccount);
-    }*/
-
     @Transactional
     public void transaction(BankAccount from, BankAccount to, BigDecimal amount) {
         from.withdraw(amount);

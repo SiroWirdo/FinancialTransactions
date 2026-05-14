@@ -3,7 +3,6 @@ package com.financial.FinancialTransactions.user.controller;
 import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

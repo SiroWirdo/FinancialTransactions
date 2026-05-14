@@ -1,6 +1,5 @@
 package com.financial.FinancialTransactions.transaction.controller;
 
-import com.financial.FinancialTransactions.bankaccount.controller.BankAccountController;
 import com.financial.FinancialTransactions.transaction.dto.TransactionDepositDTO;
 import com.financial.FinancialTransactions.transaction.dto.TransactionTransferDTO;
 import com.financial.FinancialTransactions.transaction.service.TransactionService;
@@ -13,9 +12,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @WebMvcTest(TransactionController.class)
 @AutoConfigureRestTestClient

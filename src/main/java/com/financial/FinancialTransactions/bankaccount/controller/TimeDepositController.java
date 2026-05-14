@@ -4,7 +4,6 @@ import com.financial.FinancialTransactions.bankaccount.dto.DepositGetDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositOpenNewDTO;
 import com.financial.FinancialTransactions.bankaccount.service.TimeDepositService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

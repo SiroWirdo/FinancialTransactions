@@ -1,6 +1,5 @@
 package com.financial.FinancialTransactions.bankaccount.dto;
 
-import com.financial.FinancialTransactions.entity.TransactionHistory;
 import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
 import lombok.Data;
 
