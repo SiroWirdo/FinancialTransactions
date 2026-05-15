@@ -2,6 +2,7 @@ package com.financial.FinancialTransactions.transaction.controller;
 
 import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
 import com.financial.FinancialTransactions.transaction.service.TransactionHistoryService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class TransactionHistoryController {
         this.transactionHistoryService = transactionHistoryService;
     }
 
+    @Operation(summary = "Retrieve all historical transactions for given bank account")
     @GetMapping
     public List<TransactionHistoryGetDTO> getTransactionsHistory(@RequestParam Long bankAccountId) {
         return transactionHistoryService.getAccountTransactionsHistory(bankAccountId);

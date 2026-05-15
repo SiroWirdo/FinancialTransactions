@@ -3,6 +3,7 @@ package com.financial.FinancialTransactions.transaction.controller;
 import com.financial.FinancialTransactions.transaction.dto.TransactionDepositDTO;
 import com.financial.FinancialTransactions.transaction.dto.TransactionTransferDTO;
 import com.financial.FinancialTransactions.transaction.service.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    @Operation(summary = "Transfer value between two accounts")
     @PostMapping("/transfer")
     public ResponseEntity<Void> transfer(@RequestBody TransactionTransferDTO request) {
 
@@ -31,6 +33,7 @@ public class TransactionController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Deposit value to the account")
     @PostMapping("/deposit")
     public ResponseEntity<Void> deposit(@RequestBody TransactionDepositDTO request) {
         transactionService.deposit(request.getBankAccountId(), request.getAmount());
