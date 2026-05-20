@@ -1,5 +1,6 @@
 package com.financial.FinancialTransactions.entity;
 
+import com.financial.FinancialTransactions.general.enumaration.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,19 +32,30 @@ public class UserAccount {
     @Getter
     @Setter
     private List<BankAccount> bankAccounts = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    @Getter
+    @Setter
+    private Role role;
+    @Getter
+    @Setter
+    private String email;
 
     public UserAccount(){
         this.userName = "";
         this.firstName = "";
         this.lastName = "";
         this.password = "";
+        this.role = Role.USER;
+        this.email = "";
     }
 
-    public UserAccount(String userName, String firstName, String lastName, String password){
+    public UserAccount(String userName, String firstName, String lastName, String password, Role role, String email) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.role = role;
+        this.email = email;
     }
 
     public void addBankAccount(BankAccount account) {

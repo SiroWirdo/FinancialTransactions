@@ -12,11 +12,25 @@ services:
     image: postgres
     container_name: postgres-db
     environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
+
+  app:
+    build: .
+
+    container_name: financial-transactions-app
+
+    depends_on:
+      - postgres
+
+    env_file:
+      - .env
+
+    ports:
+      - "8080:8080"
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

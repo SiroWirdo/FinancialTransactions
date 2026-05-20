@@ -4,12 +4,14 @@ import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api/users")
 public class UserAccountController {
     private final UserAccountService userAccountService;

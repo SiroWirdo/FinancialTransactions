@@ -4,6 +4,7 @@ import com.financial.FinancialTransactions.transaction.dto.TransactionDepositDTO
 import com.financial.FinancialTransactions.transaction.dto.TransactionTransferDTO;
 import com.financial.FinancialTransactions.transaction.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api/transactions")
 public class TransactionController {
     private final TransactionService transactionService;

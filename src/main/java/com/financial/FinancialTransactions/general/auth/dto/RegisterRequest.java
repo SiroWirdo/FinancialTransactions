@@ -1,14 +1,13 @@
-package com.financial.FinancialTransactions.user.dto;
+package com.financial.FinancialTransactions.general.auth.dto;
 
 import com.financial.FinancialTransactions.general.enumaration.Role;
 import lombok.Data;
 
 @Data
-public class UserAccountGetDTO {
+public class RegisterRequest {
     private String userName;
     private String firstName;
     private String lastName;
     private String password;
-    private Role role;
     private String email;
 }
