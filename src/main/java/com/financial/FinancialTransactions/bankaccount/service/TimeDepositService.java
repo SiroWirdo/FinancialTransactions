@@ -20,6 +20,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeDepositService {
@@ -82,11 +83,9 @@ public class TimeDepositService {
     public List<DepositGetDTO> getAllDepositsForAccount(Long bankAccountId) {
         List<Deposit> deposits = depositRepository.findAllBySourceBankAccountId(bankAccountId);
 
-        List<DepositGetDTO> dtoList = new ArrayList<>();
-
-        deposits.forEach(deposit -> dtoList.add(depositMapper.toDepositGetDTO(deposit)));
-
-        return dtoList;
+        return deposits.stream()
+                .map(depositMapper :: toDepositGetDTO)
+                .collect(Collectors.toList());
     }
 }
 

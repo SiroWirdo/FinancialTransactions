@@ -2,6 +2,7 @@ package com.financial.FinancialTransactions.bankaccount;
 
 import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.entity.UserAccount;
+import com.financial.FinancialTransactions.general.enumaration.Role;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ class BankAccountRepositoryTest {
     @Test
     void findByIdForUpdate() {
         UserAccount userAccount = new UserAccount();
+        userAccount.setUserName("UserName");
+        userAccount.setFirstName("FirstName");
+        userAccount.setLastName("LastName");
+        userAccount.setPassword("password");
+        userAccount.setEmail("email");
+        userAccount.setRole(Role.USER);
         entityManager.persist(userAccount);
 
         BankAccount bankAccount = new BankAccount();

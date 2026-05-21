@@ -7,10 +7,10 @@ public class NotFoundException extends RuntimeException {
     }
 
     public NotFoundException(String name, Long recordId) {
-        super("Could not find " + name + " " + recordId);
+        super("Could not find " + name + ", id: " + recordId);
     }
 
     public NotFoundException(String name, String recordCode) {
-        super("Could not find " + name + " " + recordCode);
+        super("Could not find " + name + ", id: " + recordCode);
     }
 }

@@ -2,6 +2,7 @@ package com.financial.FinancialTransactions.entity;
 
 import com.financial.FinancialTransactions.general.enumaration.TransactionStatus;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transaction_history")
+@Getter
+@Setter
 public class TransactionHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_hist_seq")
@@ -17,26 +20,14 @@ public class TransactionHistory {
     private Long id;
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "from_bank_account_id")
-    @Getter
-    @Setter
     private BankAccount fromBankAccount;
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "to_bank_account_id")
-    @Getter
-    @Setter
     private BankAccount toBankAccount;
-    @Getter
-    @Setter
     private BigDecimal amount;
-    @Getter
-    @Setter
     @Enumerated(EnumType.STRING)
     private TransactionStatus type;
-    @Getter
-    @Setter
     private LocalDateTime createdAt;
-    @Getter
-    @Setter
     private String description;
 
     public TransactionHistory() {}

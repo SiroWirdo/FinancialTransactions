@@ -4,10 +4,15 @@ import com.financial.FinancialTransactions.bankaccount.dto.BankAccountGetDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountWithTransactionsDTO;
 import com.financial.FinancialTransactions.bankaccount.service.BankAccountService;
 import com.financial.FinancialTransactions.general.enumaration.TransactionStatus;
+import com.financial.FinancialTransactions.general.security.CustomUserDetailsService;
+import com.financial.FinancialTransactions.general.security.JwtService;
 import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -21,7 +26,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-@WebMvcTest(BankAccountController.class)
+@SpringBootTest
 @AutoConfigureRestTestClient
 @AutoConfigureMockMvc(addFilters = false)
 class BankAccountControllerTest {
@@ -39,8 +44,7 @@ class BankAccountControllerTest {
         bankAccountGetDTO.setBalance(BigDecimal.TWO);
         bankAccountGetDTO.setUserName("test");
 
-        List<BankAccountGetDTO> bankaccountList = new ArrayList<>();
-        bankaccountList.add(bankAccountGetDTO);
+        List<BankAccountGetDTO> bankaccountList = List.of(bankAccountGetDTO);
 
         when(bankAccountService.getAllBankAccounts()).thenReturn(bankaccountList);
 

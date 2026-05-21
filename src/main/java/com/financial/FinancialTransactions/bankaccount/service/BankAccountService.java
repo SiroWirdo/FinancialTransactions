@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BankAccountService {
@@ -24,11 +25,11 @@ public class BankAccountService {
     }
 
     @Transactional
-    public void transaction(BankAccount from, BankAccount to, BigDecimal amount) {
-        from.withdraw(amount);
-        to.deposit(amount);
-        bankAccountRepository.save(from);
-        bankAccountRepository.save(to);
+    public void transaction(BankAccount fromBankAccount, BankAccount toBankAccount, BigDecimal amount) {
+        fromBankAccount.withdraw(amount);
+        toBankAccount.deposit(amount);
+        bankAccountRepository.save(fromBankAccount);
+        bankAccountRepository.save(toBankAccount);
     }
 
     public void deposit(BankAccount bankAccount, BigDecimal amount) {
@@ -38,9 +39,10 @@ public class BankAccountService {
 
     public List<BankAccountGetDTO> getAllBankAccounts() {
         List<BankAccount> bankAccounts = bankAccountRepository.findAll();
-        List<BankAccountGetDTO> result = new ArrayList<>();
-        bankAccounts.forEach(bankAccount -> result.add(bankAccountMapper.toBankAccountGetDTO(bankAccount)));
-        return result;
+
+        return bankAccounts.stream()
+                .map(bankAccountMapper::toBankAccountGetDTO)
+                .collect(Collectors.toList());
     }
 
     public BankAccountWithTransactionsDTO getBankAccountWithTransactions(Long bankAccountId) {

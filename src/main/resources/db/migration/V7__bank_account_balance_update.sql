@@ -1,0 +1,2 @@
+ALTER TABLE bank_account
+ALTER COLUMN balance TYPE NUMERIC(15,2);

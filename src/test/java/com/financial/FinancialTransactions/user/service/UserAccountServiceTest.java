@@ -2,6 +2,7 @@ package com.financial.FinancialTransactions.user.service;
 
 import com.financial.FinancialTransactions.entity.UserAccount;
 import com.financial.FinancialTransactions.exception.NotFoundException;
+import com.financial.FinancialTransactions.general.enumaration.Role;
 import com.financial.FinancialTransactions.sequence.service.IbanGeneratorService;
 import com.financial.FinancialTransactions.user.UserAccountRepository;
 import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
@@ -34,7 +35,7 @@ class UserAccountServiceTest {
 
     @Test
     void getAllUserAccounts() {
-        UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass");
+        UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
         UserAccountGetDTO userAccountGetDTO = new UserAccountGetDTO();
         userAccountGetDTO.setUserName("uname");
         userAccountGetDTO.setFirstName("fname");
@@ -63,7 +64,7 @@ class UserAccountServiceTest {
         testUser.setLastName("lname");
         testUser.setPassword("pass");
 
-        UserAccount expectedUser = new UserAccount("uname", "fname", "lname", "pass");
+        UserAccount expectedUser = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
         String iban = "PL07123498760000000000000123";
 
         when(userAccountMapper.toUserAccount(testUser)).thenReturn(expectedUser);
@@ -76,7 +77,7 @@ class UserAccountServiceTest {
     @Test
     void updateUserAccount() {
         Long userId = 1L;
-        UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass");
+        UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
         UserAccountUpdateDTO updateDTO = new UserAccountUpdateDTO();
         updateDTO.setFirstName("updatedFirstName");
         updateDTO.setLastName("updatedLastName");
@@ -105,7 +106,7 @@ class UserAccountServiceTest {
     @Test
     void partialUpdateUserAccount() {
         Long userId = 1L;
-        UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass");
+        UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
         UserAccountUpdateDTO updateDTO = new UserAccountUpdateDTO();
         updateDTO.setFirstName("updatedFirstName");
 

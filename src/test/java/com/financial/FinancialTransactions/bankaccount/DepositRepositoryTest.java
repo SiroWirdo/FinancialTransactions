@@ -5,6 +5,7 @@ import com.financial.FinancialTransactions.entity.Deposit;
 import com.financial.FinancialTransactions.entity.UserAccount;
 import com.financial.FinancialTransactions.general.enumaration.DepositStatus;
 import com.financial.FinancialTransactions.general.enumaration.DepositType;
+import com.financial.FinancialTransactions.general.enumaration.Role;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ class DepositRepositoryTest {
     @Test
     void findAllByStatusAndMaturityDateLessThanEqual() {
         UserAccount userAccount = new UserAccount();
+        userAccount.setUserName("UserName");
+        userAccount.setFirstName("FirstName");
+        userAccount.setLastName("LastName");
+        userAccount.setPassword("password");
+        userAccount.setEmail("email");
+        userAccount.setRole(Role.USER);
         entityManager.persist(userAccount);
 
         BankAccount bankAccount = new BankAccount();
@@ -89,6 +96,12 @@ class DepositRepositoryTest {
     @Test
     void findAllBySourceBankAccountId() {
         UserAccount userAccount = new UserAccount();
+        userAccount.setUserName("UserName");
+        userAccount.setFirstName("FirstName");
+        userAccount.setLastName("LastName");
+        userAccount.setPassword("password");
+        userAccount.setEmail("email");
+        userAccount.setRole(Role.USER);
         entityManager.persist(userAccount);
 
         BankAccount bankAccount = new BankAccount();

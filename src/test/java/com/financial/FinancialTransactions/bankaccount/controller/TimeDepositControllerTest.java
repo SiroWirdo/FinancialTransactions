@@ -5,9 +5,14 @@ import com.financial.FinancialTransactions.bankaccount.dto.DepositOpenNewDTO;
 import com.financial.FinancialTransactions.bankaccount.service.TimeDepositService;
 import com.financial.FinancialTransactions.general.enumaration.DepositStatus;
 import com.financial.FinancialTransactions.general.enumaration.DepositType;
+import com.financial.FinancialTransactions.general.security.CustomUserDetailsService;
+import com.financial.FinancialTransactions.general.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -20,7 +25,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-@WebMvcTest(TimeDepositController.class)
+@SpringBootTest
 @AutoConfigureRestTestClient
 @AutoConfigureMockMvc(addFilters = false)
 class TimeDepositControllerTest {

@@ -1,11 +1,16 @@
 package com.financial.FinancialTransactions.user.controller;
 
+import com.financial.FinancialTransactions.general.security.CustomUserDetailsService;
+import com.financial.FinancialTransactions.general.security.JwtService;
 import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -16,7 +21,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-@WebMvcTest(UserAccountController.class)
+@SpringBootTest
 @AutoConfigureRestTestClient
 @AutoConfigureMockMvc(addFilters = false)
 class UserAccountControllerTest {

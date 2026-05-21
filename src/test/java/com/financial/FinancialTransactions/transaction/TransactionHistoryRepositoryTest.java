@@ -3,6 +3,7 @@ package com.financial.FinancialTransactions.transaction;
 import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.entity.TransactionHistory;
 import com.financial.FinancialTransactions.entity.UserAccount;
+import com.financial.FinancialTransactions.general.enumaration.Role;
 import com.financial.FinancialTransactions.general.enumaration.TransactionStatus;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,12 @@ class TransactionHistoryRepositoryTest {
     @Test
     void findTransactionHistoryByFromAccountId(){
         UserAccount userAccount = new UserAccount();
+        userAccount.setUserName("UserName");
+        userAccount.setFirstName("FirstName");
+        userAccount.setLastName("LastName");
+        userAccount.setPassword("password");
+        userAccount.setEmail("email");
+        userAccount.setRole(Role.USER);
         entityManager.persist(userAccount);
 
         BankAccount fromAccount = new BankAccount();
@@ -61,6 +68,12 @@ class TransactionHistoryRepositoryTest {
     @Test
     void findTransactionHistoryByToAccountId(){
         UserAccount userAccount = new UserAccount();
+        userAccount.setUserName("UserName");
+        userAccount.setFirstName("FirstName");
+        userAccount.setLastName("LastName");
+        userAccount.setPassword("password");
+        userAccount.setEmail("email");
+        userAccount.setRole(Role.USER);
         entityManager.persist(userAccount);
 
         BankAccount fromAccount = new BankAccount();

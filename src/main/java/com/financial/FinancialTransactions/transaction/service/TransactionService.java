@@ -46,7 +46,10 @@ public class TransactionService {
         BankAccount first;
         BankAccount second;
 
-        /* To avoid deadlock always lock records in the same order */
+        /* To avoid deadlock always lock records in the same order. */
+        /* This helps to avoid situation where first user transfer to second */
+        /* and at the same time second user transfer to the first one. */
+        /* It can cause a lock where both user are waiting for each other */
         if (fromBankAccountId < toBankAccountId) {
             first = bankAccountRepository.findByIdForUpdate(fromBankAccountId)
                     .orElseThrow(() -> new NotFoundException("BankAccount", fromBankAccountId));
