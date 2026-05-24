@@ -189,8 +189,11 @@ POST /auth/register
 Content-Type: application/json
 
 {
-  "email": "john@example.com",
-  "password": "password123"
+  "userName": "admin",
+  "firstName": "John",
+  "lastName": "Cash",
+  "password": "123456",
+  "email": "john@example.com"
 }
 ```
 
@@ -204,7 +207,7 @@ Content-Type: application/json
 
 {
   "email": "john@example.com",
-  "password": "password123"
+  "password": "123456"
 }
 ```
 
