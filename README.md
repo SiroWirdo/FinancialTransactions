@@ -92,7 +92,7 @@ http://localhost:8080/v3/api-docs
 
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/auth/register` | Register new user |
+| POST | `/auth/register` | Register new user. Choose USER role to create user with Bank Account, choose ADMIN role for admin user without bank account |
 | POST | `/auth/login` | Authenticate user |
 
 ---
@@ -137,7 +137,7 @@ http://localhost:8080/v3/api-docs
 | Method | Endpoint | Description |
 |---|---|---|
 | GET | `/api/users` | Retrieve all user accounts |
-| POST | `/api/users` | Create a new user account |
+| GET | `/api/users/user-account` | Retrieve given user account with its bank account ids |
 | POST | `/api/users/{userId}` | Update user account |
 
 ---
@@ -194,6 +194,7 @@ Content-Type: application/json
   "lastName": "Cash",
   "password": "123456",
   "email": "john@example.com"
+  "role": "USER"
 }
 ```
 
