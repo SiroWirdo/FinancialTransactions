@@ -247,9 +247,7 @@ Run tests:
 - Kafka event processing
 - CI/CD pipeline
 - Kubernetes deployment
-- Rate limiting
 - API versioning
-- Monitoring with Prometheus/Grafana
 - Role-based authorization
 
 ---
@@ -269,6 +267,6 @@ This project was built to practice:
 ---
 
 ## Author
-
+Marcin Chlebowski
 GitHub:  
 https://github.com/SiroWirdo
