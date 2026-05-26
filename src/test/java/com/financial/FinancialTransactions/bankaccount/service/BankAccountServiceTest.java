@@ -1,7 +1,7 @@
 package com.financial.FinancialTransactions.bankaccount.service;
 
 import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
-import com.financial.FinancialTransactions.bankaccount.dto.BankAccountGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.BankAccountDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountMapper;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountWithTransactionsDTO;
 import com.financial.FinancialTransactions.entity.BankAccount;
@@ -73,14 +73,14 @@ class BankAccountServiceTest {
         bankAccounts.add(bankAccount);
         bankAccounts.add(bankAccount2);
 
-        BankAccountGetDTO dto1 = new BankAccountGetDTO();
-        BankAccountGetDTO dto2 = new BankAccountGetDTO();
+        BankAccountDTO dto1 = new BankAccountDTO();
+        BankAccountDTO dto2 = new BankAccountDTO();
 
         when(bankAccountRepository.findAll()).thenReturn(bankAccounts);
         when(bankAccountMapper.toBankAccountGetDTO(bankAccount)).thenReturn(dto1);
         when(bankAccountMapper.toBankAccountGetDTO(bankAccount2)).thenReturn(dto2);
 
-        List<BankAccountGetDTO> result = bankAccountService.getAllBankAccounts();
+        List<BankAccountDTO> result = bankAccountService.getAllBankAccounts();
         assertNotNull(result);
         assertEquals(bankAccounts.size(), result.size());
         assertEquals(dto1, result.get(0));

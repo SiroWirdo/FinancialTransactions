@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-public class DepositGetDTO {
+public class DepositDTO {
     private Long id;
     private Long sourceBankAccountId;
     private BigDecimal amount;

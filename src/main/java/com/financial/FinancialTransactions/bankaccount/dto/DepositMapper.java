@@ -5,17 +5,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DepositMapper {
-    public DepositGetDTO toDepositGetDTO(Deposit deposit) {
-        DepositGetDTO depositGetDTO = new DepositGetDTO();
-        depositGetDTO.setId(deposit.getId());
-        depositGetDTO.setSourceBankAccountId(deposit.getSourceBankAccount().getId());
-        depositGetDTO.setDepositType(deposit.getType());
-        depositGetDTO.setRate(deposit.getRate());
-        depositGetDTO.setAmount(deposit.getAmount());
-        depositGetDTO.setLengthInMonths(deposit.getLengthInMonths());
-        depositGetDTO.setMaturityDate(deposit.getMaturityDate());
-        depositGetDTO.setStatus(deposit.getStatus());
+    public DepositDTO toDepositGetDTO(Deposit deposit) {
+        DepositDTO depositDTO = new DepositDTO();
+        depositDTO.setId(deposit.getId());
+        depositDTO.setSourceBankAccountId(deposit.getSourceBankAccount().getId());
+        depositDTO.setDepositType(deposit.getType());
+        depositDTO.setRate(deposit.getRate());
+        depositDTO.setAmount(deposit.getAmount());
+        depositDTO.setLengthInMonths(deposit.getLengthInMonths());
+        depositDTO.setMaturityDate(deposit.getMaturityDate());
+        depositDTO.setStatus(deposit.getStatus());
 
-        return depositGetDTO;
+        return depositDTO;
     }
 }

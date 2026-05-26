@@ -1,6 +1,6 @@
 package com.financial.FinancialTransactions.transaction.controller;
 
-import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
+import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryDTO;
 import com.financial.FinancialTransactions.transaction.service.TransactionHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -20,7 +20,7 @@ public class TransactionHistoryController {
 
     @Operation(summary = "Retrieve all historical transactions for given bank account")
     @GetMapping
-    public List<TransactionHistoryGetDTO> getTransactionsHistory(@RequestParam Long bankAccountId) {
+    public List<TransactionHistoryDTO> getTransactionsHistory(@RequestParam Long bankAccountId) {
         return transactionHistoryService.getAccountTransactionsHistory(bankAccountId);
     }
 }

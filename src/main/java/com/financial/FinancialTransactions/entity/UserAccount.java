@@ -28,7 +28,9 @@ public class UserAccount {
     private Role role;
     private String email;
 
-    public UserAccount() {}
+    public UserAccount() {
+        this.bankAccounts = new ArrayList<>();
+    }
 
     public UserAccount(String userName, String firstName, String lastName, String password, Role role, String email) {
         this.userName = userName;

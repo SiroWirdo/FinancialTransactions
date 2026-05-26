@@ -2,11 +2,11 @@ package com.financial.FinancialTransactions.user.dto;
 
 import com.financial.FinancialTransactions.general.enumaration.Role;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-public class UserAccountUpdateDTO {
+public class UserAccountDTO {
+    private Long userAccountId;
+    private String userName;
     private String firstName;
     private String lastName;
     private String password;

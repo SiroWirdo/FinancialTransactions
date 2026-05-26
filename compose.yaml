@@ -6,9 +6,9 @@ services:
     container_name: postgres-db
 
     environment:
-      POSTGRES_DB: ${DB_NAME:-financial_db}
-      POSTGRES_USER: ${DB_USERNAME:-admin}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-123}
+      POSTGRES_DB: financial_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123
 
     ports:
       - "5432:5432"
@@ -36,9 +36,9 @@ services:
 
     environment:
       DB_HOST: db
-      DB_NAME: ${DB_NAME:-financial_db}
-      DB_USERNAME: ${DB_USERNAME:-admin}
-      DB_PASSWORD: ${DB_PASSWORD:-123}
+      DB_NAME: financial_db
+      DB_USERNAME: admin
+      DB_PASSWORD: 123
 
       JWT_SECRET: ${JWT_SECRET:-aktBOU5pcUlpZHd4WEVFZTJyUlVHS2xyeDYzc1BVSm5MZnRsN1lIbWY3VQ==}
 

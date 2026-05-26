@@ -1,6 +1,6 @@
 package com.financial.FinancialTransactions.bankaccount.controller;
 
-import com.financial.FinancialTransactions.bankaccount.dto.DepositGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.DepositDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositOpenNewDTO;
 import com.financial.FinancialTransactions.bankaccount.service.TimeDepositService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +23,7 @@ public class TimeDepositController {
 
     @Operation(summary = "Retrieve all time deposits for a given bank account")
     @GetMapping
-    public List<DepositGetDTO> getTimeDepositsByBankAccountId(@RequestParam Long bankAccountId) {
+    public List<DepositDTO> getTimeDepositsByBankAccountId(@RequestParam Long bankAccountId) {
         return timeDepositService.getAllDepositsForAccount(bankAccountId);
     }
 

@@ -3,7 +3,7 @@ package com.financial.FinancialTransactions.transaction.service;
 import com.financial.FinancialTransactions.entity.TransactionHistory;
 import com.financial.FinancialTransactions.general.enumaration.TransactionStatus;
 import com.financial.FinancialTransactions.transaction.TransactionHistoryRepository;
-import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
+import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryDTO;
 import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +45,7 @@ class TransactionHistoryServiceTest {
     void getAccountTransactionsHistory() {
         var bankAccountId = 1L;
         var transactionHistory = new TransactionHistory();
-        var transactionHistoryGetDTO = new TransactionHistoryGetDTO();
+        var transactionHistoryGetDTO = new TransactionHistoryDTO();
 
         when(transactionHistoryRepository.findTransactionHistoryByFromAccountId(bankAccountId))
                 .thenReturn(List.of(transactionHistory));
@@ -54,7 +54,7 @@ class TransactionHistoryServiceTest {
         when(transactionHistoryMapper.toTransactionHistoryDTO(transactionHistory))
                 .thenReturn(transactionHistoryGetDTO);
 
-        List<TransactionHistoryGetDTO> result = transactionHistoryService.getAccountTransactionsHistory(bankAccountId);
+        List<TransactionHistoryDTO> result = transactionHistoryService.getAccountTransactionsHistory(bankAccountId);
 
         assertNotNull(result);
         assertEquals(1, result.size());

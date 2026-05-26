@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TransactionHistoryMapper {
-    public TransactionHistoryGetDTO toTransactionHistoryDTO(TransactionHistory transactionHistory) {
-        TransactionHistoryGetDTO dto = new TransactionHistoryGetDTO();
+    public TransactionHistoryDTO toTransactionHistoryDTO(TransactionHistory transactionHistory) {
+        TransactionHistoryDTO dto = new TransactionHistoryDTO();
         dto.setFromBankAccountId(transactionHistory.getFromBankAccount().getId());
         dto.setToBankAccountId(transactionHistory.getToBankAccount().getId());
         dto.setType(transactionHistory.getType());

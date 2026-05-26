@@ -1,26 +1,20 @@
 package com.financial.FinancialTransactions.bankaccount.controller;
 
-import com.financial.FinancialTransactions.bankaccount.dto.BankAccountGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.BankAccountDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountWithTransactionsDTO;
 import com.financial.FinancialTransactions.bankaccount.service.BankAccountService;
 import com.financial.FinancialTransactions.general.enumaration.TransactionStatus;
-import com.financial.FinancialTransactions.general.security.CustomUserDetailsService;
-import com.financial.FinancialTransactions.general.security.JwtService;
-import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
+import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
-import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
-import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,13 +32,13 @@ class BankAccountControllerTest {
 
     @Test
     void getBankAccounts() {
-        var bankAccountGetDTO = new BankAccountGetDTO();
+        var bankAccountGetDTO = new BankAccountDTO();
         bankAccountGetDTO.setBankAccountId(1L);
         bankAccountGetDTO.setBankAccountNumber("123456789");
         bankAccountGetDTO.setBalance(BigDecimal.TWO);
         bankAccountGetDTO.setUserName("test");
 
-        List<BankAccountGetDTO> bankaccountList = List.of(bankAccountGetDTO);
+        List<BankAccountDTO> bankaccountList = List.of(bankAccountGetDTO);
 
         when(bankAccountService.getAllBankAccounts()).thenReturn(bankaccountList);
 
@@ -63,7 +57,7 @@ class BankAccountControllerTest {
     @Test
     void getBankAccountWithTransactions() {
         var localDateTime = LocalDateTime.now();
-        var outgoingTransactionsDTO = new TransactionHistoryGetDTO();
+        var outgoingTransactionsDTO = new TransactionHistoryDTO();
         outgoingTransactionsDTO.setFromBankAccountId(1L);
         outgoingTransactionsDTO.setToBankAccountId(2L);
         outgoingTransactionsDTO.setType(TransactionStatus.COMPLETED);
@@ -71,7 +65,7 @@ class BankAccountControllerTest {
         outgoingTransactionsDTO.setAmount(BigDecimal.ONE);
         outgoingTransactionsDTO.setCreatedAt(localDateTime);
 
-        var incomingTransactionsDTO = new TransactionHistoryGetDTO();
+        var incomingTransactionsDTO = new TransactionHistoryDTO();
         incomingTransactionsDTO.setFromBankAccountId(2L);
         incomingTransactionsDTO.setToBankAccountId(1L);
         incomingTransactionsDTO.setType(TransactionStatus.COMPLETED);

@@ -5,9 +5,9 @@ import com.financial.FinancialTransactions.exception.NotFoundException;
 import com.financial.FinancialTransactions.general.enumaration.Role;
 import com.financial.FinancialTransactions.sequence.service.IbanGeneratorService;
 import com.financial.FinancialTransactions.user.UserAccountRepository;
-import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
 import com.financial.FinancialTransactions.user.dto.UserAccountMapper;
-import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountWithoutUserNameDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,54 +36,36 @@ class UserAccountServiceTest {
     @Test
     void getAllUserAccounts() {
         UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
-        UserAccountGetDTO userAccountGetDTO = new UserAccountGetDTO();
-        userAccountGetDTO.setUserName("uname");
-        userAccountGetDTO.setFirstName("fname");
-        userAccountGetDTO.setLastName("lname");
-        userAccountGetDTO.setPassword("pass");
+        UserAccountDTO userAccountDTO = new UserAccountDTO();
+        userAccountDTO.setUserName("uname");
+        userAccountDTO.setFirstName("fname");
+        userAccountDTO.setLastName("lname");
+        userAccountDTO.setPassword("pass");
 
         List<UserAccount> userAccountList = new ArrayList<>();
         userAccountList.add(userAccount);
 
         when(userAccountRepository.findAll()).thenReturn(userAccountList);
-        when(userAccountMapper.toDTO(userAccount)).thenReturn(userAccountGetDTO);
+        when(userAccountMapper.toDTO(userAccount)).thenReturn(userAccountDTO);
 
-        List<UserAccountGetDTO> testUserList = userAccountService.getAllUserAccounts();
+        List<UserAccountDTO> testUserList = userAccountService.getAllUserAccounts();
         assertNotNull(testUserList);
         assertEquals(userAccountList.size(), testUserList.size());
 
-        UserAccountGetDTO testUser = testUserList.getFirst();
-        assertEquals(testUser, userAccountGetDTO);
-    }
-
-    @Test
-    void createUserAccount() {
-        UserAccountGetDTO testUser = new UserAccountGetDTO();
-        testUser.setUserName("uname");
-        testUser.setFirstName("fname");
-        testUser.setLastName("lname");
-        testUser.setPassword("pass");
-
-        UserAccount expectedUser = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
-        String iban = "PL07123498760000000000000123";
-
-        when(userAccountMapper.toUserAccount(testUser)).thenReturn(expectedUser);
-        when(ibanGeneratorService.generateIBAN()).thenReturn(iban);
-
-        userAccountService.createUserAccount(testUser);
-        verify(userAccountRepository).save(expectedUser);
+        UserAccountDTO testUser = testUserList.getFirst();
+        assertEquals(testUser, userAccountDTO);
     }
 
     @Test
     void updateUserAccount() {
         Long userId = 1L;
         UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
-        UserAccountUpdateDTO updateDTO = new UserAccountUpdateDTO();
+        UserAccountWithoutUserNameDTO updateDTO = new UserAccountWithoutUserNameDTO();
         updateDTO.setFirstName("updatedFirstName");
         updateDTO.setLastName("updatedLastName");
         updateDTO.setPassword("updatedPassword");
 
-        UserAccountGetDTO mappedDto = new UserAccountGetDTO();
+        UserAccountDTO mappedDto = new UserAccountDTO();
         mappedDto.setUserName("uname");
         mappedDto.setFirstName("fname");
         mappedDto.setLastName("lname");
@@ -93,7 +75,7 @@ class UserAccountServiceTest {
         when(userAccountMapper.toDTO(any(UserAccount.class))).thenReturn(mappedDto);
         when(userAccountRepository.save(any(UserAccount.class))).thenReturn(userAccount);
 
-        UserAccountGetDTO result = userAccountService.updateUserAccount(userId, updateDTO);
+        UserAccountDTO result = userAccountService.updateUserAccount(userId, updateDTO);
         assertEquals(result, mappedDto);
         assertEquals("updatedFirstName", userAccount.getFirstName());
         assertEquals("updatedLastName", userAccount.getLastName());
@@ -107,10 +89,10 @@ class UserAccountServiceTest {
     void partialUpdateUserAccount() {
         Long userId = 1L;
         UserAccount userAccount = new UserAccount("uname", "fname", "lname", "pass", Role.USER, "email");
-        UserAccountUpdateDTO updateDTO = new UserAccountUpdateDTO();
+        UserAccountWithoutUserNameDTO updateDTO = new UserAccountWithoutUserNameDTO();
         updateDTO.setFirstName("updatedFirstName");
 
-        UserAccountGetDTO mappedDto = new UserAccountGetDTO();
+        UserAccountDTO mappedDto = new UserAccountDTO();
         mappedDto.setUserName("uname");
         mappedDto.setFirstName("fname");
         mappedDto.setLastName("lname");
@@ -120,7 +102,7 @@ class UserAccountServiceTest {
         when(userAccountMapper.toDTO(any(UserAccount.class))).thenReturn(mappedDto);
         when(userAccountRepository.save(any(UserAccount.class))).thenReturn(userAccount);
 
-        UserAccountGetDTO result = userAccountService.updateUserAccount(userId, updateDTO);
+        UserAccountDTO result = userAccountService.updateUserAccount(userId, updateDTO);
         assertEquals(result, mappedDto);
         assertEquals("updatedFirstName", userAccount.getFirstName());
         assertEquals("lname", userAccount.getLastName());
@@ -136,7 +118,7 @@ class UserAccountServiceTest {
         when(userAccountRepository.findById(userId)).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class,
-                () -> userAccountService.updateUserAccount(userId, new UserAccountUpdateDTO())
+                () -> userAccountService.updateUserAccount(userId, new UserAccountWithoutUserNameDTO())
         );
 
         verify(userAccountRepository, never()).save(any());

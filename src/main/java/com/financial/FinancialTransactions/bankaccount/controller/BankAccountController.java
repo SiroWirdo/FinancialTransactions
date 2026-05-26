@@ -1,6 +1,6 @@
 package com.financial.FinancialTransactions.bankaccount.controller;
 
-import com.financial.FinancialTransactions.bankaccount.dto.BankAccountGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.BankAccountDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountWithTransactionsDTO;
 import com.financial.FinancialTransactions.bankaccount.service.BankAccountService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +25,7 @@ public class BankAccountController {
 
     @Operation(summary = "Retrieve all bank accounts")
     @GetMapping
-    public List<BankAccountGetDTO> getBankAccounts() {
+    public List<BankAccountDTO> getBankAccounts() {
         return bankAccountService.getAllBankAccounts();
     }
 

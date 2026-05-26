@@ -2,7 +2,7 @@ package com.financial.FinancialTransactions.bankaccount.service;
 
 import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
 import com.financial.FinancialTransactions.bankaccount.DepositRepository;
-import com.financial.FinancialTransactions.bankaccount.dto.DepositGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.DepositDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositMapper;
 import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.entity.Deposit;
@@ -131,12 +131,12 @@ class TimeDepositServiceTest {
         Deposit deposit = new Deposit();
         deposit.setSourceBankAccount(bankAccount);
 
-        DepositGetDTO dto1 = new DepositGetDTO();
+        DepositDTO dto1 = new DepositDTO();
 
         when(depositRepository.findAllBySourceBankAccountId(bankaccountId)).thenReturn(List.of(deposit));
         when(depositMapper.toDepositGetDTO(deposit)).thenReturn(dto1);
 
-        List<DepositGetDTO> depositList = timeDepositService.getAllDepositsForAccount(bankaccountId);
+        List<DepositDTO> depositList = timeDepositService.getAllDepositsForAccount(bankaccountId);
 
         assertFalse(depositList.isEmpty());
         assertEquals(1, depositList.size());

@@ -2,7 +2,7 @@ package com.financial.FinancialTransactions.bankaccount.service;
 
 import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
 import com.financial.FinancialTransactions.bankaccount.DepositRepository;
-import com.financial.FinancialTransactions.bankaccount.dto.DepositGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.DepositDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositMapper;
 import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.entity.Deposit;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,7 +79,7 @@ public class TimeDepositService {
         }
     }
 
-    public List<DepositGetDTO> getAllDepositsForAccount(Long bankAccountId) {
+    public List<DepositDTO> getAllDepositsForAccount(Long bankAccountId) {
         List<Deposit> deposits = depositRepository.findAllBySourceBankAccountId(bankAccountId);
 
         return deposits.stream()

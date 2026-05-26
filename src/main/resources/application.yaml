@@ -33,7 +33,8 @@ logging:
   level:
     org.flywaydb: DEBUG
     org.springframework.boot.autoconfigure.flyway: DEBUG
-    org.springframework.security: TRACE
+    org.springframework.security: DEBUG
+    com.zaxxer.hikari: DEBUG
 
 jwt:
   secret: ${JWT_SECRET:aktBOU5pcUlpZHd4WEVFZTJyUlVHS2xyeDYzc1BVSm5MZnRsN1lIbWY3VQ==}

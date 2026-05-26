@@ -1,7 +1,8 @@
 package com.financial.FinancialTransactions.user.controller;
 
-import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
-import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountWithBankAccountsDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountWithoutUserNameDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -22,21 +23,19 @@ public class UserAccountController {
 
     @Operation(summary = "Retrieve all user accounts")
     @GetMapping
-    public List<UserAccountGetDTO> getUserList(){
+    public List<UserAccountDTO> getUserList(){
         return userAccountService.getAllUserAccounts();}
-
-    @Operation(summary = "Create a new user account")
-    @PostMapping
-    public ResponseEntity<UserAccountGetDTO> createNewUser(@RequestBody UserAccountGetDTO usr){
-        UserAccountGetDTO result = userAccountService.createUserAccount(usr);
-
-        return ResponseEntity.ok(result);
-    }
 
     @Operation(summary = "Update user account")
     @PatchMapping("/{userId}")
-    public ResponseEntity<UserAccountGetDTO> partiallyUpdateEmployee(@RequestBody UserAccountUpdateDTO updatedDTO, @PathVariable Long userId){
-        UserAccountGetDTO updated = userAccountService.updateUserAccount(userId, updatedDTO);
+    public ResponseEntity<UserAccountDTO> partiallyUpdateEmployee(@RequestBody UserAccountWithoutUserNameDTO updatedDTO, @PathVariable Long userId){
+        UserAccountDTO updated = userAccountService.updateUserAccount(userId, updatedDTO);
         return ResponseEntity.ok(updated);
+    }
+
+    @Operation(summary = "Retrieve given user account with its bank acounts ids")
+    @GetMapping ("/user-account")
+    public UserAccountWithBankAccountsDTO getUserAccountWithBankAccounts(@RequestParam Long userAccountId) {
+        return userAccountService.getUserAccountWithBankAccounts(userAccountId);
     }
 }

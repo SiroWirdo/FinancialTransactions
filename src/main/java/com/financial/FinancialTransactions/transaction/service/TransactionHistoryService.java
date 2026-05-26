@@ -3,7 +3,7 @@ package com.financial.FinancialTransactions.transaction.service;
 import com.financial.FinancialTransactions.entity.TransactionHistory;
 import com.financial.FinancialTransactions.general.enumaration.TransactionStatus;
 import com.financial.FinancialTransactions.transaction.TransactionHistoryRepository;
-import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
+import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryDTO;
 import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,11 +28,11 @@ public class TransactionHistoryService {
         transactionHistoryRepository.save(transactionHistory);
     }
 
-    public List<TransactionHistoryGetDTO> getAccountTransactionsHistory(Long bankAccountId) {
+    public List<TransactionHistoryDTO> getAccountTransactionsHistory(Long bankAccountId) {
         List<TransactionHistory> transactionFrom = transactionHistoryRepository.findTransactionHistoryByFromAccountId(bankAccountId);
         List<TransactionHistory> transactionTo = transactionHistoryRepository.findTransactionHistoryByToAccountId(bankAccountId);
 
-        ArrayList<TransactionHistoryGetDTO> result = new ArrayList<>();
+        ArrayList<TransactionHistoryDTO> result = new ArrayList<>();
 
         transactionFrom.forEach(transaction -> result.add(transactionHistoryMapper.toTransactionHistoryDTO(transaction)));
         transactionTo.forEach(transaction -> result.add(transactionHistoryMapper.toTransactionHistoryDTO(transaction)));

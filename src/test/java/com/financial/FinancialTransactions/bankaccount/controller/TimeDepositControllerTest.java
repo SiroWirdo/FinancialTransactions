@@ -1,20 +1,15 @@
 package com.financial.FinancialTransactions.bankaccount.controller;
 
-import com.financial.FinancialTransactions.bankaccount.dto.DepositGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.DepositDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.DepositOpenNewDTO;
 import com.financial.FinancialTransactions.bankaccount.service.TimeDepositService;
 import com.financial.FinancialTransactions.general.enumaration.DepositStatus;
 import com.financial.FinancialTransactions.general.enumaration.DepositType;
-import com.financial.FinancialTransactions.general.security.CustomUserDetailsService;
-import com.financial.FinancialTransactions.general.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
-import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
-import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
@@ -39,17 +34,17 @@ class TimeDepositControllerTest {
     void getTimeDepositsByBankAccountId() {
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        DepositGetDTO depositGetDTO = new DepositGetDTO();
-        depositGetDTO.setId(1L);
-        depositGetDTO.setSourceBankAccountId(1L);
-        depositGetDTO.setDepositType(DepositType.TIMED);
-        depositGetDTO.setRate(BigDecimal.ONE);
-        depositGetDTO.setAmount(BigDecimal.ONE);
-        depositGetDTO.setLengthInMonths(2);
-        depositGetDTO.setMaturityDate(localDateTime);
-        depositGetDTO.setStatus(DepositStatus.ACTIVE);
+        DepositDTO depositDTO = new DepositDTO();
+        depositDTO.setId(1L);
+        depositDTO.setSourceBankAccountId(1L);
+        depositDTO.setDepositType(DepositType.TIMED);
+        depositDTO.setRate(BigDecimal.ONE);
+        depositDTO.setAmount(BigDecimal.ONE);
+        depositDTO.setLengthInMonths(2);
+        depositDTO.setMaturityDate(localDateTime);
+        depositDTO.setStatus(DepositStatus.ACTIVE);
 
-        List<DepositGetDTO> depositList = List.of(depositGetDTO);
+        List<DepositDTO> depositList = List.of(depositDTO);
         when(timeDepositService.getAllDepositsForAccount(1L)).thenReturn(depositList);
 
         restTestClient.get()

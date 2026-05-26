@@ -1,6 +1,6 @@
 package com.financial.FinancialTransactions.bankaccount.dto;
 
-import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
+import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryDTO;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,6 +12,6 @@ public class BankAccountWithTransactionsDTO {
     private String userName;
     private String bankAccountNumber;
     private BigDecimal balance;
-    private List<TransactionHistoryGetDTO> outgoingTransactions;
-    private List<TransactionHistoryGetDTO> incomingTransactions;
+    private List<TransactionHistoryDTO> outgoingTransactions;
+    private List<TransactionHistoryDTO> incomingTransactions;
 }

@@ -1,11 +1,13 @@
 package com.financial.FinancialTransactions.general.auth.service;
 
+import com.financial.FinancialTransactions.entity.BankAccount;
 import com.financial.FinancialTransactions.entity.UserAccount;
-import com.financial.FinancialTransactions.general.auth.dto.AuthResponse;
-import com.financial.FinancialTransactions.general.auth.dto.LoginRequest;
-import com.financial.FinancialTransactions.general.auth.dto.RegisterRequest;
+import com.financial.FinancialTransactions.general.auth.dto.AuthResponseDTO;
+import com.financial.FinancialTransactions.general.auth.dto.LoginRequestDTO;
+import com.financial.FinancialTransactions.general.auth.dto.RegisterRequestDTO;
 import com.financial.FinancialTransactions.general.enumaration.Role;
 import com.financial.FinancialTransactions.general.security.JwtService;
+import com.financial.FinancialTransactions.sequence.service.IbanGeneratorService;
 import com.financial.FinancialTransactions.user.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,8 +26,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final IbanGeneratorService ibanGeneratorService;
 
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponseDTO register(RegisterRequestDTO request) {
 
         UserAccount user = new UserAccount();
         user.setUserName(request.getUserName());
@@ -33,7 +36,13 @@ public class AuthService {
         user.setLastName(request.getLastName());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEmail(request.getEmail());
-        user.setRole(Role.USER);
+        user.setRole(request.getRole());
+
+        if (user.getRole().equals(Role.USER)){
+            String iban = ibanGeneratorService.generateIBAN();
+            BankAccount bankAccount = new BankAccount(user, iban);
+            user.addBankAccount(bankAccount);
+        }
 
         userRepository.save(user);
 
@@ -49,10 +58,10 @@ public class AuthService {
                 )
         );
 
-        return new AuthResponse(jwt);
+        return new AuthResponseDTO(jwt);
     }
 
-    public AuthResponse login(LoginRequest request) {
+    public AuthResponseDTO login(LoginRequestDTO request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -76,6 +85,6 @@ public class AuthService {
                 )
         );
 
-        return new AuthResponse(jwt);
+        return new AuthResponseDTO(jwt);
     }
 }

@@ -1,7 +1,7 @@
 package com.financial.FinancialTransactions.bankaccount.service;
 
 import com.financial.FinancialTransactions.bankaccount.BankAccountRepository;
-import com.financial.FinancialTransactions.bankaccount.dto.BankAccountGetDTO;
+import com.financial.FinancialTransactions.bankaccount.dto.BankAccountDTO;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountMapper;
 import com.financial.FinancialTransactions.bankaccount.dto.BankAccountWithTransactionsDTO;
 import com.financial.FinancialTransactions.entity.BankAccount;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +36,7 @@ public class BankAccountService {
         bankAccountRepository.save(bankAccount);
     }
 
-    public List<BankAccountGetDTO> getAllBankAccounts() {
+    public List<BankAccountDTO> getAllBankAccounts() {
         List<BankAccount> bankAccounts = bankAccountRepository.findAll();
 
         return bankAccounts.stream()

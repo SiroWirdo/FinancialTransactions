@@ -1,17 +1,12 @@
 package com.financial.FinancialTransactions.transaction.controller;
 
-import com.financial.FinancialTransactions.general.security.CustomUserDetailsService;
-import com.financial.FinancialTransactions.general.security.JwtService;
-import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryGetDTO;
+import com.financial.FinancialTransactions.transaction.dto.TransactionHistoryDTO;
 import com.financial.FinancialTransactions.transaction.service.TransactionHistoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
-import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
-import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
@@ -37,7 +32,7 @@ class TransactionHistoryControllerTest {
         var fromBankAccountId = 1L;
         var toBankAccountId = 2L;
         var localDateTime = LocalDateTime.now();
-        var transactionHistoryGetDTO = new TransactionHistoryGetDTO();
+        var transactionHistoryGetDTO = new TransactionHistoryDTO();
         transactionHistoryGetDTO.setFromBankAccountId(fromBankAccountId);
         transactionHistoryGetDTO.setToBankAccountId(toBankAccountId);
         transactionHistoryGetDTO.setAmount(BigDecimal.ONE);

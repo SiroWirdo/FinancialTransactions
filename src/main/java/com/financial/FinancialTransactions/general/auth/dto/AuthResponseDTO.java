@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class AuthResponse {
+public class AuthResponseDTO {
     @Getter
     private String token;
 }

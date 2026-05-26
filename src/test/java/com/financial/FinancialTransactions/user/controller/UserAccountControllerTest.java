@@ -1,18 +1,13 @@
 package com.financial.FinancialTransactions.user.controller;
 
-import com.financial.FinancialTransactions.general.security.CustomUserDetailsService;
-import com.financial.FinancialTransactions.general.security.JwtService;
-import com.financial.FinancialTransactions.user.dto.UserAccountGetDTO;
-import com.financial.FinancialTransactions.user.dto.UserAccountUpdateDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountDTO;
+import com.financial.FinancialTransactions.user.dto.UserAccountWithoutUserNameDTO;
 import com.financial.FinancialTransactions.user.sevice.UserAccountService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
-import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
-import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
@@ -34,12 +29,12 @@ class UserAccountControllerTest {
 
     @Test
     void getUserList() {
-        UserAccountGetDTO userAccount = new UserAccountGetDTO();
+        UserAccountDTO userAccount = new UserAccountDTO();
         userAccount.setUserName("test");
         userAccount.setFirstName("test");
         userAccount.setLastName("test");
         userAccount.setPassword("test");
-        List<UserAccountGetDTO> userAccountList = new ArrayList<>();
+        List<UserAccountDTO> userAccountList = new ArrayList<>();
         userAccountList.add(userAccount);
 
         when(userAccountService.getAllUserAccounts()).thenReturn(userAccountList);
@@ -56,24 +51,8 @@ class UserAccountControllerTest {
     }
 
     @Test
-    void createNewUser() {
-        UserAccountGetDTO userAccount = new UserAccountGetDTO();
-        userAccount.setUserName("test");
-        userAccount.setFirstName("test");
-        userAccount.setLastName("test");
-        userAccount.setPassword("test");
-
-        restTestClient.post()
-                .uri("/api/users")
-                .body(userAccount)
-                .exchange()
-                .expectStatus()
-                .isOk();
-    }
-
-    @Test
     void updateUser() {
-        UserAccountUpdateDTO updateDTO = new UserAccountUpdateDTO();
+        UserAccountWithoutUserNameDTO updateDTO = new UserAccountWithoutUserNameDTO();
         updateDTO.setFirstName("test");
         updateDTO.setLastName("test");
         updateDTO.setPassword("test");

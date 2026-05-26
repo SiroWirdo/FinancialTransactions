@@ -1,8 +1,8 @@
 package com.financial.FinancialTransactions.general.auth.controller;
 
-import com.financial.FinancialTransactions.general.auth.dto.AuthResponse;
-import com.financial.FinancialTransactions.general.auth.dto.LoginRequest;
-import com.financial.FinancialTransactions.general.auth.dto.RegisterRequest;
+import com.financial.FinancialTransactions.general.auth.dto.AuthResponseDTO;
+import com.financial.FinancialTransactions.general.auth.dto.LoginRequestDTO;
+import com.financial.FinancialTransactions.general.auth.dto.RegisterRequestDTO;
 import com.financial.FinancialTransactions.general.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,16 +18,16 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public AuthResponse register(
-            @RequestBody RegisterRequest request
+    public AuthResponseDTO register(
+            @RequestBody RegisterRequestDTO request
     ) {
 
         return authService.register(request);
     }
 
     @PostMapping("/login")
-    public AuthResponse login(
-            @RequestBody LoginRequest request
+    public AuthResponseDTO login(
+            @RequestBody LoginRequestDTO request
     ) {
 
         return authService.login(request);

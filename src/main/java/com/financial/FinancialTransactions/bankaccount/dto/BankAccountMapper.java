@@ -13,8 +13,8 @@ public class BankAccountMapper {
         this.transactionHistoryMapper = transactionHistoryMapper;
     }
 
-    public BankAccountGetDTO toBankAccountGetDTO(BankAccount bankAccount) {
-        BankAccountGetDTO dto = new BankAccountGetDTO();
+    public BankAccountDTO toBankAccountGetDTO(BankAccount bankAccount) {
+        BankAccountDTO dto = new BankAccountDTO();
         dto.setBankAccountId(bankAccount.getId());
         dto.setUserName(bankAccount.getUserAccount().getUserName());
         dto.setBankAccountNumber(bankAccount.getBankAccountNumber());
