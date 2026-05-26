@@ -242,6 +242,7 @@ Run tests:
 
 ## Future Improvements
 
+- More deposit types
 - Refresh tokens
 - Redis caching
 - Kafka event processing
@@ -267,6 +268,8 @@ This project was built to practice:
 ---
 
 ## Author
+
 Marcin Chlebowski
+
 GitHub:  
 https://github.com/SiroWirdo
